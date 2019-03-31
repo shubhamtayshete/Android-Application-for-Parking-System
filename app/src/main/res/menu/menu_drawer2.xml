@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/getStat"
+            android:icon="@drawable/ic_assignment_black_24dp"
+            android:title="Get Stats" />
+        <item
+            android:id="@+id/Scanner"
+            android:icon="@drawable/ic_aspect_ratio_black_24dp"
+            android:title="Scanner "/>
+        <item
+            android:id="@+id/nav_logout1"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="Logout"/>
+    </group>
+</menu>
