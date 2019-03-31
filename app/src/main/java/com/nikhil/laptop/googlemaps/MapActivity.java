@@ -48,7 +48,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     SharedPreferences prf;
     Intent intent;
-
+    private static GoogleMap gMap;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Toast.makeText(this, "map is ready", Toast.LENGTH_SHORT).show();
@@ -78,9 +78,44 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
             gMap.setMyLocationEnabled(true);
             // UiSettings.setZoomControlsEnable(true);
-            gMap.setOnMarkerClickListener(this);
-            gMap.getUiSettings().setMapToolbarEnabled(true);
+
             gMap.getUiSettings().setZoomControlsEnabled(true);
+            gMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                // Use default InfoWindow frame
+                @Override
+                public View getInfoWindow(Marker args) {
+                    return null;
+                }
+
+                // Defines the contents of the InfoWindow
+                @Override
+                public View getInfoContents(Marker args) {
+
+                    // Getting view from the layout file info_window_layout
+
+
+                    // Getting the position from the marker
+
+
+
+                    gMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        public void onInfoWindowClick(Marker marker)
+                        {
+                            endMarkerOoption=marker;
+                            Toast.makeText(MapActivity.this, "Clicked on window", Toast.LENGTH_SHORT).show();
+                            MarkerDialog markerDialog =new MarkerDialog();
+                            markerDialog.show(getSupportFragmentManager(),"marker dialog");
+
+                        }
+                    });
+
+                    // Returning the view containing InfoWindow contents
+
+
+                    return null;
+                }
+            });
 
         }
     }
@@ -102,7 +137,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     //Widgets
 //    Vars
     private Boolean mLocationPermissionGranted =false;
-    private static GoogleMap gMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -135,6 +169,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             //getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new MessageFragment()).commit();
             navigationView.setCheckedItem(R.id.QrCode);
         }
+
     }
 @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -392,47 +427,23 @@ if(i<13) {
     @Override
     public boolean onMarkerClick(Marker marker) {
         this.endMarkerOoption =marker;
-
-
         MarkerDialog markerDialog =new MarkerDialog();
         markerDialog.show(getSupportFragmentManager(),"marker dialog");
+        gMap.getUiSettings().setMapToolbarEnabled(true);
+
         return true;
     }
    public Marker returnDestination(){
         return endMarkerOoption;
    }
-   public float returnDistance(Marker marker){
-       float results[]=new float[10];
-       LatLng dest = marker.getPosition();
-       Location.distanceBetween(lattitude,longitude,dest.latitude,dest.longitude,results);
-       Log.d(TAG, "Distance = "+results[0]);
-       return results[0];
-   }
-  public void checkAvailability(final Marker markerOptio){
 
-      new Thread(new Runnable() {
-          @Override
-          public void run() {
-              while(true){
-                  try {
-                      Thread.sleep(2000);
-                      Log.d(TAG, "Checking Availability of "+markerOptio.getTitle() );
-                  } catch (InterruptedException e) {
-                      e.printStackTrace();
-                  }
 
-              }
-          }
-      }).start();
-
-  }
     public void findDirection(){
         LatLng currentLocation = new LatLng((lattitude), (longitude));
         MarkerOptions startMarkerOption =new MarkerOptions().position(currentLocation);
         //Log.d(TAG, "travel from  " +startMarkerOption.getPosition()+"  To  "+endMarkerOoption.getPosition());
         String url = getUrl(startMarkerOption.getPosition(),endMarkerOoption.getPosition(),"driving");
         new FetchURL(MapActivity.this).execute(url, "driving");
-        checkAvailability(endMarkerOoption);
 
 
     }

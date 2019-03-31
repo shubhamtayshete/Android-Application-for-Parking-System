@@ -8,15 +8,15 @@
 
     <TextView
         android:id="@+id/editText"
-        android:layout_width="109dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/button2"
+        android:layout_marginStart="-70dp"
         android:layout_marginTop="53dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:lineSpacingExtra="10sp"
-        android:text="Name of Place "
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
@@ -25,13 +25,14 @@
     <TextView
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="109dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="138dp"
+        android:layout_marginTop="125dp"
         android:ems="50"
         android:inputType="textPersonName"
         android:text=""
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp" />
 
     <Button
